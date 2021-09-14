@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Backend\AdminProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,8 +29,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin:admin']],  function (
     Route::post('/login', [AdminController::class, 'store'])->name('admin.store');
 });
 Route::get('admin/logout', [AdminController::class, 'destroy'])->name('admin.logout');
-
-
+Route::get('admin/profile', [AdminProfileController::class, 'show'])->name('admin.profile');
+Route::get('admin/profile/edit', [AdminProfileController::class, 'edit'])->name('admin.profile.edit');
 
 Route::middleware(['auth:sanctum,admin', 'verified'])->get('admin/dashboard', function () {
     return view('admin.index');
