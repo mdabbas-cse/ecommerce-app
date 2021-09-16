@@ -32,6 +32,8 @@ Route::get('admin/logout', [AdminController::class, 'destroy'])->name('admin.log
 Route::get('admin/profile', [AdminProfileController::class, 'show'])->name('admin.profile');
 Route::get('admin/profile/edit', [AdminProfileController::class, 'edit'])->name('admin.profile.edit');
 Route::post('admin/profile/update', [AdminProfileController::class, 'update'])->name('admin.profile.update');
+Route::get('admin/edit/password', [AdminProfileController::class, 'passwordEdit'])->name('admin.edit.password');
+Route::post('admin/update/password', [AdminProfileController::class, 'passwordUpdate'])->name('admin.update.password');
 
 Route::middleware(['auth:sanctum,admin', 'verified'])->get('admin/dashboard', function () {
     return view('admin.index');

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminProfileController extends Controller
 {
@@ -70,29 +72,57 @@ class AdminProfileController extends Controller
         $data = $admin->find(1);
         $data->name = $request->name;
         $data->email = $request->email;
- 
-        if($request->file('profile_photo_path')) {
+
+        if ($request->file('profile_photo_path')) {
             $file = $request->file('profile_photo_path');
-            $filename = time().$file->getClientOriginalName();
+            $filename = time() . $file->getClientOriginalName();
             $file->move(public_path('upload/admin_images/'), $filename);
-            @unlink(public_path('upload/admin_images/'.$data->profile_photo_path));
+            @unlink(public_path('upload/admin_images/' . $data->profile_photo_path));
             $data->profile_photo_path = $filename;
         }
         $results = $data->save();
 
-        if($results) {
+        if ($results) {
             $notification = [
                 'message' => 'Admin profile update successfully!',
-                'alert-type'=> 'success'
+                'alert-type' => 'success'
             ];
         } else {
             $notification = [
                 'message' => 'Someting was wrong!',
-                'alert-type'=> 'warning'
+                'alert-type' => 'warning'
             ];
         }
 
         return redirect()->route('admin.profile')->with($notification);
+    }
+
+    public function passwordEdit()
+    {
+        return view('admin.password_edit');
+    }
+
+    public function passwordUpdate(Request $request)
+    {
+
+        $validateData = $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|confirmed'
+        ]);
+        dd($validateData);
+        $admin = Admin::find(1);
+        if (Hash::check($request->current_password, $admin->password)) {
+            $admin->password = Hash::make($request->new_password);
+            $admin->save();
+            Auth::logout();
+            return redirect()->route('admin.logout');
+        } else {
+            $notification = [
+                'message' => 'Someting was wrong!',
+                'alert-type' => 'warning'
+            ];
+            return redirect()->back()->with($notification);
+        }
     }
 
     /**
