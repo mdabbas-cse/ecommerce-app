@@ -39,7 +39,7 @@
                     <h5>File Input Field <span class="text-danger">*</sprofile_photo_pathpan>
                     </h5>
                     <div class="controls">
-                      <input type="file" onchange="preview_image(event)" name="profile_photo_path" class="form-control" required="">
+                      <input type="file" onchange="preview_image(event)" name="profile_photo_path" class="form-control">
                     </div>
                   </div>
                 </div>

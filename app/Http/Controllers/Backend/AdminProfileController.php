@@ -78,8 +78,21 @@ class AdminProfileController extends Controller
             @unlink(public_path('upload/admin_images/'.$data->profile_photo_path));
             $data->profile_photo_path = $filename;
         }
-        $data->save();
-        return redirect()->route('admin.profile');
+        $results = $data->save();
+
+        if($results) {
+            $notification = [
+                'message' => 'Admin profile update successfully!',
+                'alert-type'=> 'success'
+            ];
+        } else {
+            $notification = [
+                'message' => 'Someting was wrong!',
+                'alert-type'=> 'warning'
+            ];
+        }
+
+        return redirect()->route('admin.profile')->with($notification);
     }
 
     /**
