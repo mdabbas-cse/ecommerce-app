@@ -14,7 +14,7 @@
           <a href="{{route('admin.profile.edit')}}" class="btn btn-rounded btn-outline btn-sm mb-5">Edit Profile</a>
         </div>
         <div class="widget-user-image">
-          <img class="rounded-circle" src="{{!empty($adminProfile->profile_photo_path) ? url('upload/admin_images/$adminProfile->profile_photo_path') : 'https://ui-avatars.com/api/?name='.$adminProfile->name}}" alt="User Avatar">
+          <img class="rounded-circle" src="{{!empty($adminProfile->profile_photo_path) ? url('upload/admin_images/'.$adminProfile->profile_photo_path) : 'https://ui-avatars.com/api/?name='.$adminProfile->name}}" alt="User Avatar">
         </div>
         <div class="box-footer">
           <div class="row">

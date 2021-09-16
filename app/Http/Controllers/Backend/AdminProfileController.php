@@ -67,7 +67,19 @@ class AdminProfileController extends Controller
      */
     public function update(Request $request, Admin $admin)
     {
-        //
+        $data = $admin->find(1);
+        $data->name = $request->name;
+        $data->email = $request->email;
+ 
+        if($request->file('profile_photo_path')) {
+            $file = $request->file('profile_photo_path');
+            $filename = time().$file->getClientOriginalName();
+            $file->move(public_path('upload/admin_images/'), $filename);
+            @unlink(public_path('upload/admin_images/'.$data->profile_photo_path));
+            $data->profile_photo_path = $filename;
+        }
+        $data->save();
+        return redirect()->route('admin.profile');
     }
 
     /**

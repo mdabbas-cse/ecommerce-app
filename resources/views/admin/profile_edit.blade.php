@@ -14,7 +14,8 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <form novalidate="">
+            <form action="{{route('admin.profile.update')}}" method="POST" enctype="multipart/form-data">
+            @csrf
               <div class="row">
                 <div class="col-6">
                   <div class="form-group">
@@ -43,7 +44,7 @@
                   </div>
                 </div>
                 <div class="col-6">
-                  <img id="viewImage" style="width: 80px; height: 80px;" class="" src="{{!empty($adminProfile->profile_photo_path) ? url('upload/admin_images/$adminProfile->') : 'https://ui-avatars.com/api/?name='.$adminProfile->name}}" alt="User Avatar">
+                  <img id="viewImage" style="width: 80px; height: 80px;" class="" src="{{!empty($adminProfile->profile_photo_path) ? url('upload/admin_images/'.$adminProfile->profile_photo_path) : 'https://ui-avatars.com/api/?name='.$adminProfile->name}}" alt="User Avatar">
                 </div>
               </div>
               <div class="text-xs-right">

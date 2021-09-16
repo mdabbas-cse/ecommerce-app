@@ -104,7 +104,7 @@
         <!-- User Account-->
         <li class="dropdown user user-menu">
           <a href="#" class="waves-effect waves-light rounded dropdown-toggle p-0" data-toggle="dropdown" title="User">
-            <img src="../images/avatar/1.jpg" alt="">
+            <img src="{{!empty($adminProfile->profile_photo_path) ? url('upload/admin_images/'.$adminProfile->profile_photo_path) : 'https://ui-avatars.com/api/?name='.$adminProfile->name}}" alt="">
           </a>
           <ul class="dropdown-menu animated flipInX">
             <li class="user-body">
