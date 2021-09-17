@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
+use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,11 +15,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::middleware(['auth:sanctum,web', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
@@ -38,3 +34,6 @@ Route::post('admin/update/password', [AdminProfileController::class, 'passwordUp
 Route::middleware(['auth:sanctum,admin', 'verified'])->get('admin/dashboard', function () {
     return view('admin.index');
 })->name('dashboard');
+
+//TODO Front end route
+Route::get('/', [HomeController::class, 'index']);
