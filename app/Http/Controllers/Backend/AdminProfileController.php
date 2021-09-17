@@ -107,12 +107,12 @@ class AdminProfileController extends Controller
 
         $validateData = $request->validate([
             'current_password' => 'required',
-            'new_password' => 'required|confirmed'
+            'password' => 'required|confirmed'
         ]);
-        dd($validateData);
+ 
         $admin = Admin::find(1);
         if (Hash::check($request->current_password, $admin->password)) {
-            $admin->password = Hash::make($request->new_password);
+            $admin->password = Hash::make($request->password);
             $admin->save();
             Auth::logout();
             return redirect()->route('admin.logout');
