@@ -35,9 +35,9 @@
                             <label class="info-title" for="password">Password <span>*</span></label>
                             <input type="password" name="password" class="form-control unicase-form-control text-input" id="password">
                         </div>
-                        <div class="radio outer-xs">
+                        <div class="checkbox outer-xs">
                             <label>
-                                <input type="radio" name="remember" id="optionsRadios2">Remember me!
+                                <input type="checkbox" name="remember" id="optionsRadios2">Remember me!
                             </label>
                             <a href="{{ route('password.request') }}" class="forgot-password pull-right">Forgot your Password?</a>
                         </div>
@@ -50,26 +50,47 @@
                 <div class="col-md-6 col-sm-6 create-new-account">
                     <h4 class="checkout-subtitle">Create a new account</h4>
                     <p class="text title-tag-line">Create your new account.</p>
-                    <form class="register-form outer-top-xs" role="form">
+                    <form class="register-form outer-top-xs" role="form" method="POST" action="{{ route('register') }}">
+                        @csrf
                         <div class="form-group">
-                            <label class="info-title" for="exampleInputEmail2">Email Address <span>*</span></label>
-                            <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail2">
+                            <label class="info-title" for="name">Name <span>*</span></label>
+                            <input type="text" name="name" value="{{old('name')}}" class="form-control unicase-form-control text-input" id="name" required>
+                            @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
                         <div class="form-group">
-                            <label class="info-title" for="exampleInputEmail1">Name <span>*</span></label>
-                            <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1">
+                            <label class="info-title" for="phone">Phone Number <span>*</span></label>
+                            <input type="text" name="phone" value="{{old('phone')}}" class="form-control unicase-form-control text-input" id="phone" required>
+                            @error('phone')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
                         <div class="form-group">
-                            <label class="info-title" for="exampleInputEmail1">Phone Number <span>*</span></label>
-                            <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1">
+                            <label class="info-title" for="email">Email Address <span>*</span></label>
+                            <input type="email" name="email" value="{{old('email')}}" class="form-control unicase-form-control text-input" id="email" required>
+                            @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
                         <div class="form-group">
-                            <label class="info-title" for="exampleInputEmail1">Password <span>*</span></label>
-                            <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1">
+                            <label class="info-title" for="password">Password <span>*</span></label>
+                            <input type="password" name="password" class="form-control unicase-form-control text-input" id="password" required>
+                            @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
                         <div class="form-group">
-                            <label class="info-title" for="exampleInputEmail1">Confirm Password <span>*</span></label>
-                            <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1">
+                            <label class="info-title" for="confirm_password">Confirm Password <span>*</span></label>
+                            <input type="password" name="password_confirmation" class="form-control unicase-form-control text-input" id="confirm_password" required>
                         </div>
                         <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Sign Up</button>
                     </form>
