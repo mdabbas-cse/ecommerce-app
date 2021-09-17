@@ -3222,4 +3222,4 @@
   <!-- /.container -->
 </div>
 
-@encsection
+@endsection
