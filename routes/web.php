@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +38,38 @@ Route::middleware(['auth:sanctum,admin', 'verified'])->get('admin/dashboard', fu
 
 //TODO Front end route
 Route::get('/', [HomeController::class, 'index']);
+// Route::get('/login/google', )
+
+
+Route::get('/login/google', function () {
+    return Socialite::driver('google')->redirect();
+})->name('login.google');
+
+Route::get('/google/callback', function () {
+    $user = Socialite::driver('google')->user();
+
+    // $user->token
+    dd($user);
+});
+
+Route::get('/login/facebook', function () {
+    return Socialite::driver('facebook')->redirect();
+})->name('login.facebook');
+
+Route::get('/facebook/callback', function () {
+    $user = Socialite::driver('facebook')->user();
+
+    // $user->token
+    dd($user);
+});
+
+Route::get('/login/github', function () {
+    return Socialite::driver('github')->redirect();
+})->name('login.github');
+
+Route::get('/github/callback', function () {
+    $user = Socialite::driver('github')->user();
+
+    // $user->token
+    dd($user);
+});

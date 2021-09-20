@@ -5798,12 +5798,12 @@ age-container #owl-main .owl-next {
 .body-content .sign-in-page .sign-in .social-sign-in .facebook-sign-in:focus {
   background-color: #153470;
 }
-.body-content .sign-in-page .sign-in .social-sign-in .twitter-sign-in {
-  background-color: #22aadf;
+.body-content .sign-in-page .sign-in .social-sign-in .google-sign-in {
+  background-color: #ff6500;
 }
-.body-content .sign-in-page .sign-in .social-sign-in .twitter-sign-in:hover,
-.body-content .sign-in-page .sign-in .social-sign-in .twitter-sign-in:focus {
-  background-color: #0084B9;
+.body-content .sign-in-page .sign-in .social-sign-in .google-sign-in:hover,
+.body-content .sign-in-page .sign-in .social-sign-in .google-sign-in:focus {
+  background-color: #d85601;
 }
 .body-content .sign-in-page .create-new-account > span {
   font-size: 20px;
