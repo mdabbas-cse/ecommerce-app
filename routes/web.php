@@ -38,7 +38,7 @@ Route::middleware(['auth:sanctum,admin', 'verified'])->get('admin/dashboard', fu
 })->name('dashboard');
 
 //TODO Front end route
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
 // Route::get('/login/google', )
 
 
