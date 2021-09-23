@@ -22,6 +22,16 @@
 @endsection
 
 @section('content')
+<div class="breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-inner">
+            <ul class="list-inline list-unstyled">
+                <li><a href="{{route('home.index')}}">Home</a></li>
+                <li class='active' href="{{route('dashboard')}}">Dashboard</li>
+            </ul>
+        </div><!-- /.breadcrumb-inner -->
+    </div><!-- /.container -->
+</div><!-- /.breadcrumb -->
 
 <div class="body-content outer-top-xs">
     <div class="container mt-3">
