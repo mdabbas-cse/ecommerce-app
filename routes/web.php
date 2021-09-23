@@ -3,9 +3,9 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\ThirdPartyLoginController;
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,13 +35,14 @@ Route::post('admin/update/password', [AdminProfileController::class, 'passwordUp
 
 Route::middleware(['auth:sanctum,admin', 'verified'])->get('admin/dashboard', function () {
     return view('admin.index');
-})->name('dashboard');
+})->name('admin.dashboard');
 
 //TODO Front end route
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
-// Route::get('/login/google', )
+Route::get('/user-logout', [UserController::class, 'logout'])->name('user.logout');
+Route::post('/user-update', [UserController::class, 'update'])->name('user.update');
 
-
+//TODO Thired party login controller
 Route::get('/login/google', [ThirdPartyLoginController::class, 'googleLogin'])->name('login.google');
 Route::get('/google/callback', [ThirdPartyLoginController::class, 'googleCallback']);
 
@@ -50,3 +51,4 @@ Route::get('/facebook/callback', [ThirdPartyLoginController::class, 'facebookCal
 
 Route::get('/login/github', [ThirdPartyLoginController::class, 'githubLogin'])->name('login.github');
 Route::get('/github/callback', [ThirdPartyLoginController::class, 'githubCallback']);
+

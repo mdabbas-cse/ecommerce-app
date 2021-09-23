@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
@@ -64,17 +63,18 @@ class ThirdPartyLoginController extends Controller
 
     private static function login($data)
     {
-
         $user = User::firstOrCreate(
             [
                 'email' => $data->email
             ],
             [
-                'name' => $data->name,
-                'provider_id' => $data->id,
-                'password' => Hash::make(Str::random(24))
+                'name'                  => $data->name,
+                'provider_id'           => $data->id ?? uniqid(),
+                'profile_photo_path'    => $data->avatar,
+                'password'              => Hash::make(Str::random(24))
             ]
         );
+
 
         Auth::login($user, true);
     }
