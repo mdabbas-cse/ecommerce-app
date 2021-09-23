@@ -9,9 +9,10 @@
     }
 
     .user-profile-img {
-        width: 150px;
-        height: 150px;
+        width: 100px;
+        height: 100px;
         border-radius: 50%;
+        margin-bottom: 20px;
     }
 
     .mt-2 {
@@ -40,8 +41,15 @@
                 <div class="card mt-3">
                     <div class="card-body">
                         <div class="flx">
+                            <?php
 
-                            <img class="user-profile-img" src="https://www.pinclipart.com/picdir/middle/165-1655940_account-human-person-user-icon-username-png-icon.png" alt="">
+                            if (Auth::user()->provider_id) {
+                                $img_path = Auth::user()->profile_photo_path;
+                            } elseif (Auth::user()->profile_photo_path) {
+                                $img_path = "https://ui-avatars.com/api/?name=" . Auth::user()->name . "&background=random";
+                            }
+                            ?>
+                            <img class="user-profile-img" src="{{$img_path}}" alt="user profile image">
                         </div>
                         <ul class="list-group">
                             <a href="#" class="list-group-item d-flex justify-content-between align-items-center">
