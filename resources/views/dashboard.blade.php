@@ -54,10 +54,10 @@
                             <img id='previewImage' class="user-profile-img" src="{{$img_path}}" alt="user profile image">
                         </div>
                         <ul class="list-group">
-                            <a href="#" class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="{{ route('dashboard')}}" class="list-group-item d-flex justify-content-between align-items-center">
                                 Profile
                             </a>
-                            <a href="" class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="{{ route('user.edit.password')}}" class="list-group-item d-flex justify-content-between align-items-center">
                                 Change password
 
                             </a>

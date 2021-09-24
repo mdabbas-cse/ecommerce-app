@@ -6,19 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
     public function logout()
     {
         Auth::logout();
@@ -57,14 +48,30 @@ class UserController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
+    public function editpassword()
     {
-        //
+        return view('frontend.change_user_password');
+    }
+
+    public function updatepassword(Request $request, User $user)
+    {
+        $validateData = $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|confirmed'
+        ]);
+
+        $loginUser = $user->find(Auth::user()->id);
+        if (Hash::check($request->current_password, $loginUser->password)) {
+            $loginUser->password = Hash::make($request->password);
+            $loginUser->save();
+            Auth::logout();
+            return redirect()->route('logout');
+        } else {
+            $notification = [
+                'message' => 'Someting was wrong!',
+                'alert-type' => 'warning'
+            ];
+            return redirect()->back()->with($notification);
+        }
     }
 }

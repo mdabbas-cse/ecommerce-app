@@ -41,6 +41,8 @@ Route::middleware(['auth:sanctum,admin', 'verified'])->get('admin/dashboard', fu
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/user-logout', [UserController::class, 'logout'])->name('user.logout');
 Route::post('/user-update', [UserController::class, 'update'])->name('user.update');
+Route::get('/user-edit-password', [UserController::class, 'editpassword'])->name('user.edit.password');
+Route::post('/user-update-password', [UserController::class, 'updatepassword'])->name('user.update.password');
 
 //TODO Thired party login controller
 Route::get('/login/google', [ThirdPartyLoginController::class, 'googleLogin'])->name('login.google');
