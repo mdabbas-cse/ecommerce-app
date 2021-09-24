@@ -24,7 +24,7 @@
                     <div class="social-sign-in outer-top-xs">
                         <a href="{{ route('login.google') }}" class="google-sign-in"><i class="fa fa-google"></i> Sign In with Google</a>
                         <a href="{{ route('login.facebook')}}" class="facebook-sign-in"><i class="fa fa-facebook"></i> Sign In with Facebook</a>
-                        <a href="{{ route('login.github')}}" class="facebook-sign-in"><i class="fa fa-github"></i> Sign In with Github</a>
+                        <a href="{{ route('login.github')}}" class="github-sign-in"><i class="fa fa-github"></i> Sign In with Github</a>
                     </div>
                     <form class="register-form outer-top-xs" role="form" method="POST" action="{{ isset($guard) ? url($guard.'/login') : route('login') }}">
                         @csrf
