@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
+use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\ThirdPartyLoginController;
@@ -53,4 +54,10 @@ Route::get('/facebook/callback', [ThirdPartyLoginController::class, 'facebookCal
 
 Route::get('/login/github', [ThirdPartyLoginController::class, 'githubLogin'])->name('login.github');
 Route::get('/github/callback', [ThirdPartyLoginController::class, 'githubCallback']);
+
+//TODO backend functionallity
+//TODO Brand Route
+Route::group(['prefix' => 'brand'], function (){
+    Route::get('/all', [BrandController::class, 'all'])->name('all.brand');
+});
 
