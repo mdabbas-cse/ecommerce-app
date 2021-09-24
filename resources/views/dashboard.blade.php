@@ -46,7 +46,7 @@
                             if (Auth::user()->provider_id) {
                                 $img_path = Auth::user()->profile_photo_path;
                             } elseif (Auth::user()->profile_photo_path) {
-                                $img_path = url('upload/user_images/'. Auth::user()->profile_photo_path);
+                                $img_path = url('upload/user_images/' . Auth::user()->profile_photo_path);
                             } else {
                                 $img_path = "https://ui-avatars.com/api/?name=" . Auth::user()->name . "&background=random";
                             }
