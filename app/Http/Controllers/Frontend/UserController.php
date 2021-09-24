@@ -27,22 +27,24 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $data = $user->find(Auth::user()->id);
-        $data->name = $request->name;
-        $data->email = $request->email;
+        $user = $user->find(Auth::user()->id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
 
         if ($request->file('profile_photo_path')) {
             $file = $request->file('profile_photo_path');
             $filename = time() . $file->getClientOriginalName();
-            $file->move(public_path('upload/admin_images/'), $filename);
-            @unlink(public_path('upload/admin_images/' . $data->profile_photo_path));
-            $data->profile_photo_path = $filename;
+            $file->move(public_path('upload/user_images/'), $filename);
+            @unlink(public_path('upload/user_images/' . $user->profile_photo_path));
+            $user->profile_photo_path = $filename;
+            $user->provider_id = '';
         }
-        $results = $data->save();
+        $response = $user->save();
 
-        if ($results) {
+        if ($response) {
             $notification = [
-                'message' => 'Admin profile update successfully!',
+                'message' => 'Profile update successfully!',
                 'alert-type' => 'success'
             ];
         } else {
@@ -52,7 +54,7 @@ class UserController extends Controller
             ];
         }
 
-        return redirect()->route('admin.profile')->with($notification);
+        return redirect()->back()->with($notification);
     }
 
     /**

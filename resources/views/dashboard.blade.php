@@ -46,10 +46,12 @@
                             if (Auth::user()->provider_id) {
                                 $img_path = Auth::user()->profile_photo_path;
                             } elseif (Auth::user()->profile_photo_path) {
+                                $img_path = url('upload/user_images/'. Auth::user()->profile_photo_path);
+                            } else {
                                 $img_path = "https://ui-avatars.com/api/?name=" . Auth::user()->name . "&background=random";
                             }
                             ?>
-                            <img class="user-profile-img" src="{{$img_path}}" alt="user profile image">
+                            <img id='previewImage' class="user-profile-img" src="{{$img_path}}" alt="user profile image">
                         </div>
                         <ul class="list-group">
                             <a href="#" class="list-group-item d-flex justify-content-between align-items-center">
@@ -70,7 +72,8 @@
             <div class="col-md-9">
                 <div class="card well">
                     <div class="card-body">
-                        <form method="POST" action="{{route('user.update')}}">
+                        <form method="POST" action="{{route('user.update')}}" enctype="multipart/form-data">
+                            @csrf
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" name="email" value="{{Auth::user()->email}}" class="form-control" id="email" aria-describedby="email">
@@ -85,7 +88,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="image" class="form-label">Phone</label>
-                                <input type="file" name="profile_photo_path" class="form-control" id="image">
+                                <input onchange="previewImage(event)" type="file" name="profile_photo_path" class="form-control" id="image">
                             </div>
                             <button type="submit" class="btn btn-primary mt-2">Update</button>
                         </form>
@@ -96,4 +99,20 @@
     </div>
 </div>
 
+@endsection
+
+@section('js')
+<script>
+    const putImage = document.getElementById('previewImage')
+    const oldImage = putImage.currentSrc
+    console.log(oldImage)
+    const previewImage = (event) => {
+        const reader = new FileReader()
+
+        reader.onload = () => {
+            putImage.src = reader.result
+        }
+        reader.readAsDataURL(event.target.files[0])
+    }
+</script>
 @endsection
