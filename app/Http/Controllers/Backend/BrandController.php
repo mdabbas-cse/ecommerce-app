@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManagerStatic;
 
 class BrandController extends Controller
 {
@@ -14,9 +15,9 @@ class BrandController extends Controller
         return view('backend.brand.all', compact('brands'));
     }
 
-    public function create()
+    public function add()
     {
-        //
+        return view('backend.brand.add');
     }
 
     /**
@@ -25,9 +26,44 @@ class BrandController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Brand $brand)
     {
-        //
+        $validation = $request->validate([
+            'brand_name_bn' => 'required',
+            'brand_name_en' => 'required',
+            'brand_photo' => 'required'
+        ], [
+            'brand_name_bn.required' => 'Brand name bangla required',
+            'brand_name_en.required' => 'Brand name english required',
+            'brand_photo.required' => 'Brand image required'
+        ]);
+
+        $brand_bn = $request->brand_name_bn;
+        $brand_en = $request->brand_name_en;
+        $image = $request->file('brand_photo');
+        $newImageName = hexdec(uniqid()) . '.' . $image->getClientOriginalName();
+        ImageManagerStatic::make($image)->resize(300, 300)->save('upload/brand/' . $newImageName);
+        $path = 'upload/brand/' . $newImageName;
+        
+        $brand->brand_name_en = $brand_en;
+        $brand->brand_slug_en = strtolower(str_replace(' ', '-', $brand_en));
+        $brand->brand_name_bn = $brand_bn;
+        $brand->brand_slug_bn = str_replace(' ', '-', $brand_en);
+        $brand->brand_photo = $path;
+        $response = $brand->save();
+
+        if ($response) {
+            $notification = [
+                'message' => 'Profile update successfully!',
+                'alert-type' => 'success'
+            ];
+        } else {
+            $notification = [
+                'message' => 'Someting was wrong!',
+                'alert-type' => 'warning'
+            ];
+        }
+        return redirect()->route('all.brand')->with($notification);
     }
 
     /**

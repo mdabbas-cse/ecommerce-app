@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::middleware(['auth:sanctum,web', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
@@ -57,7 +58,8 @@ Route::get('/github/callback', [ThirdPartyLoginController::class, 'githubCallbac
 
 //TODO backend functionallity
 //TODO Brand Route
-Route::group(['prefix' => 'brand'], function (){
+Route::group(['prefix' => 'brand'], function () {
     Route::get('/all', [BrandController::class, 'all'])->name('all.brand');
+    Route::get('/add', [BrandController::class, 'add'])->name('add.brand');
+    Route::post('/store', [BrandController::class, 'store'])->name('store.brand');
 });
-

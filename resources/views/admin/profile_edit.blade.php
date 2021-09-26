@@ -5,7 +5,7 @@
 <section class="content">
   <div class="row">
     <div class="col-12">
-      <section class="content">
+
 
         <!-- Basic Forms -->
         <div class="box">
@@ -55,8 +55,6 @@
           <!-- /.box-body -->
         </div>
         <!-- /.box -->
-
-      </section>
     </div>
   </div>
 </section>
