@@ -20,12 +20,6 @@ class BrandController extends Controller
         return view('backend.brand.add');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request, Brand $brand)
     {
         $validation = $request->validate([
@@ -66,26 +60,17 @@ class BrandController extends Controller
         return redirect()->route('all.brand')->with($notification);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
     public function show(Brand $brand)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Brand $brand)
+
+    public function edit(Brand $brand, Request $request)
     {
-        //
+        if(empty($request->id)) return redirect()->route('all.brand');
+        $data = $brand->findOrfail($request->id);
+        return view('backend.brand.edit', compact('data'));
     }
 
     /**

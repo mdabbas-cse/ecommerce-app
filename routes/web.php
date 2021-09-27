@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\ThirdPartyLoginController;
+use App\Models\Brand;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,4 +63,6 @@ Route::group(['prefix' => 'brand'], function () {
     Route::get('/all', [BrandController::class, 'all'])->name('all.brand');
     Route::get('/add', [BrandController::class, 'add'])->name('add.brand');
     Route::post('/store', [BrandController::class, 'store'])->name('store.brand');
+    Route::get('/edit/{id}', [BrandController::class, 'edit'])->name('edit.brand');
+    Route::get('/delete/{id}', [BrandController::class, 'edit'])->name('delete.brand');
 });

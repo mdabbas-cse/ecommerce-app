@@ -1,5 +1,15 @@
 @extends('admin.admin_master')
 
+@section('css')
+
+<style>
+  .dark-skin .table-bordered > tbody > tr > td {
+    padding: 5px !important;
+  }
+</style>
+
+@endsection
+
 @section('admin')
 <!-- Main content -->
 <section class="content">
@@ -26,30 +36,20 @@
                 </tr>
               </thead>
               <tbody>
+                @foreach( $brands as $brand)
                 <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
+                  <td>{{ $brand->id }}</td>
+                  <td>{{ $brand->brand_name_en }}</td>
+                  <td>{{ $brand->brand_slug_en }}</td>
+                  <td>{{ $brand->brand_name_bn }}</td>
+                  <td>{{ $brand->brand_slug_bn }}</td>
+                  <td style="text-align: center;"><img style="width: 40px; " src="{{ asset($brand->brand_photo) }}" alt=""></td>
+                  <td>
+                    <a class="btn btn-info btn-sm" href="{{ route('edit.brand', $brand->id) }}">Edit</a>
+                    <a class="btn btn-danger btn-sm" href="{{ route('delete.brand', $brand->id) }}">Delete</a>
+                  </td>
                 </tr>
-                <tr>
-                  <td>Garrett Winters</td>
-                  <td>Accountant</td>
-                  <td>Tokyo</td>
-                  <td>63</td>
-                  <td>2011/07/25</td>
-                  <td>$170,750</td>
-                </tr>
-                <tr>
-                  <td>Donna Snider</td>
-                  <td>Customer Support</td>
-                  <td>New York</td>
-                  <td>27</td>
-                  <td>2011/01/25</td>
-                  <td>$112,000</td>
-                </tr>
+                @endforeach
               </tbody>
             </table>
           </div>
