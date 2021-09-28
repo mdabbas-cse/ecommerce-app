@@ -13,7 +13,7 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <form action="{{route('store.brand')}}" method="POST" enctype="multipart/form-data">
+          <form action="{{route('update.brand', $data->id)}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
               <div class="col-6">
@@ -57,7 +57,7 @@
               </div>
             </div>
             <div class="text-xs-right">
-              <button type="submit" class="btn btn-rounded btn-info px-4">Add Brand</button>
+              <button type="submit" class="btn btn-rounded btn-info px-4">Update Brand</button>
             </div>
           </form>
         </div>
@@ -91,10 +91,10 @@
   }
 
   const removeImage = () => {
-    const currentImage = document.getElementById('viewImage').src
-    currentImage.src = null
+    const currentImage = document.getElementById('viewImage')
+    currentImage.src = oldImage
+    image.value = ''
     remove_btn.innerHTML = ''
-
   }
 </script>
 @endsection

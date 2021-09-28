@@ -38,17 +38,17 @@ class BrandController extends Controller
         $newImageName = hexdec(uniqid()) . '.' . $image->getClientOriginalName();
         ImageManagerStatic::make($image)->resize(300, 300)->save('upload/brand/' . $newImageName);
         $path = 'upload/brand/' . $newImageName;
-        
+
         $brand->brand_name_en = $brand_en;
         $brand->brand_slug_en = strtolower(str_replace(' ', '-', $brand_en));
         $brand->brand_name_bn = $brand_bn;
-        $brand->brand_slug_bn = str_replace(' ', '-', $brand_en);
+        $brand->brand_slug_bn = str_replace(' ', '-', $brand_bn);
         $brand->brand_photo = $path;
         $response = $brand->save();
 
         if ($response) {
             $notification = [
-                'message' => 'Profile update successfully!',
+                'message' => 'Brand added successfully!',
                 'alert-type' => 'success'
             ];
         } else {
@@ -60,39 +60,61 @@ class BrandController extends Controller
         return redirect()->route('all.brand')->with($notification);
     }
 
-    public function show(Brand $brand)
-    {
-        //
-    }
-
-
     public function edit(Brand $brand, Request $request)
     {
-        if(empty($request->id)) return redirect()->route('all.brand');
+        if (empty($request->id)) return redirect()->route('all.brand');
         $data = $brand->findOrfail($request->id);
         return view('backend.brand.edit', compact('data'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Brand $brand)
     {
-        //
+        $id = $request->id;
+        $data = $brand->findOrfail($id);
+
+        $validation = $request->validate([
+            'brand_name_bn' => 'required',
+            'brand_name_en' => 'required',
+        ], [
+            'brand_name_bn.required' => 'Brand name bangla required',
+            'brand_name_en.required' => 'Brand name english required'
+        ]);
+
+        $brand_bn = $request->brand_name_bn;
+        $brand_en = $request->brand_name_en;
+        $oldImage = $data->brand_photo;
+
+        if ($request->file('brand_photo')) {
+            $image = $request->file('brand_photo');
+            $newImageName = hexdec(uniqid()) . '.' . $image->getClientOriginalName();
+            ImageManagerStatic::make($image)->resize(300, 300)->save('upload/brand/' . $newImageName);
+            $path = 'upload/brand/' . $newImageName;
+            $data->brand_photo = $path;
+            @unlink(public_path($oldImage));
+        }
+
+        $data->brand_name_en = $brand_en;
+        $data->brand_slug_en = strtolower(str_replace(' ', '-', $brand_en));
+        $data->brand_name_bn = $brand_bn;
+        $data->brand_slug_bn = str_replace(' ', '-', $brand_bn);
+        $response = $data->save();
+
+        if ($response) {
+            $notification = [
+                'message' => 'Brand update successfully!',
+                'alert-type' => 'success'
+            ];
+        } else {
+            $notification = [
+                'message' => 'Someting was wrong!',
+                'alert-type' => 'warning'
+            ];
+        }
+        return redirect()->route('all.brand')->with($notification);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Brand $brand)
+    public function delete($id)
     {
-        //
+        dd($id);
     }
 }

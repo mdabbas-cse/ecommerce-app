@@ -3,7 +3,7 @@
 @section('css')
 
 <style>
-  .dark-skin .table-bordered > tbody > tr > td {
+  .dark-skin .table-bordered>tbody>tr>td {
     padding: 5px !important;
   }
 </style>
@@ -28,8 +28,8 @@
                 <tr>
                   <th>SN</th>
                   <th>Brand name En</th>
-                  <th>Brnad name Bn</th>
                   <th>Banad slug En</th>
+                  <th>Brnad name Bn</th>
                   <th>Banad slug Bn</th>
                   <th>image</th>
                   <th>Action</th>
@@ -45,8 +45,12 @@
                   <td>{{ $brand->brand_slug_bn }}</td>
                   <td style="text-align: center;"><img style="width: 40px; " src="{{ asset($brand->brand_photo) }}" alt=""></td>
                   <td>
-                    <a class="btn btn-info btn-sm" href="{{ route('edit.brand', $brand->id) }}">Edit</a>
-                    <a class="btn btn-danger btn-sm" href="{{ route('delete.brand', $brand->id) }}">Delete</a>
+                    <form method="POST" action="{{ route('delete.brand', ['id'=>$brand->id]) }}">
+                      <a class="btn btn-info btn-sm" href="{{ route('edit.brand', $brand->id) }}">Edit</a>
+                      {{ csrf_field() }}
+                      {{ method_field('DELETE') }}
+                      <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                    </form>
                   </td>
                 </tr>
                 @endforeach
