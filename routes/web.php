@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\ThirdPartyLoginController;
@@ -65,5 +66,15 @@ Route::group(['prefix' => 'brand'], function () {
     Route::post('/store', [BrandController::class, 'store'])->name('store.brand');
     Route::get('/edit/{id}', [BrandController::class, 'edit'])->name('edit.brand');
     Route::post('/update/{id}', [BrandController::class, 'update'])->name('update.brand');
-    Route::delete('/delete/{id}', [BrandController::class, 'delete'])->name('delete.brand');
+    Route::post('/delete/{id}', [BrandController::class, 'delete'])->name('delete.brand');
+});
+
+// TODO Category
+Route::group(['prefix' => 'category'], function () {
+    Route::get('/all', [CategoryController::class, 'index'])->name('all.category');
+    Route::get('/add', [CategoryController::class, 'create'])->name('add.category');
+    Route::post('/store', [CategoryController::class, 'store'])->name('store.category');
+    Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('edit.category');
+    Route::post('/update/{id}', [CategoryController::class, 'update'])->name('update.category');
+    Route::post('/delete/{id}', [CategoryController::class, 'destroy'])->name('delete.category');
 });
